@@ -1,0 +1,14 @@
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\obj\Debug\net9.0\Cwiczenie2_rider.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\obj\Debug\net9.0\Cwiczenie2_rider.AssemblyInfoInputs.cache
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\obj\Debug\net9.0\Cwiczenie2_rider.AssemblyInfo.cs
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\obj\Debug\net9.0\Cwiczenie2_rider.csproj.CoreCompileInputs.cache
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\bin\Debug\net9.0\Cwiczenie2_rider.exe
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\bin\Debug\net9.0\Cwiczenie2_rider.deps.json
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\bin\Debug\net9.0\Cwiczenie2_rider.runtimeconfig.json
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\bin\Debug\net9.0\Cwiczenie2_rider.dll
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\bin\Debug\net9.0\Cwiczenie2_rider.pdb
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\obj\Debug\net9.0\Cwiczenie2_rider.dll
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\obj\Debug\net9.0\refint\Cwiczenie2_rider.dll
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\obj\Debug\net9.0\Cwiczenie2_rider.pdb
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\obj\Debug\net9.0\Cwiczenie2_rider.genruntimeconfig.cache
+C:\Users\007li\Documents\GitHub\HW2\Cwiczenie2_rider\Cwiczenie2_rider\obj\Debug\net9.0\ref\Cwiczenie2_rider.dll

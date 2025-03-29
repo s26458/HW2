@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class OverfillException : Exception
 {
@@ -13,11 +15,11 @@ public interface IHazardNotifier
 public abstract class Container
 {
     public string SerialNumber { get; private set; }
-    public double MaxCapacity { get; private set; } 
-    public double CurrentLoad { get; protected set; } 
-    public double Weight { get; private set; } 
-    public double Height { get; private set; } 
-    public double Depth { get; private set; } 
+    public double MaxCapacity { get; private set; }
+    public double CurrentLoad { get; protected set; }
+    public double Weight { get; private set; }
+    public double Height { get; private set; }
+    public double Depth { get; private set; }
     protected string ProductType { get; set; }
 
     private static int serialCounter = 1;
@@ -52,9 +54,9 @@ public abstract class Container
 
 public class LiquidContainer : Container, IHazardNotifier
 {
-    public bool IsHazardous {get; private set;}
-    
-    public LiquidContainer(double maxCapacity, double weight, double height, double depth, bool isHazardous) 
+    public bool IsHazardous { get; private set; }
+
+    public LiquidContainer(double maxCapacity, double weight, double height, double depth, bool isHazardous)
         : base(maxCapacity, weight, height, depth, "L")
     {
         IsHazardous = isHazardous;
@@ -63,7 +65,7 @@ public class LiquidContainer : Container, IHazardNotifier
 
     public override void Load(double mass)
     {
-        double effectriveCapacity = IsHazardous ? MaxCapacity * 0.5 / MaxCapacity * 0.9;
+        double effectriveCapacity = IsHazardous ? (MaxCapacity * 0.5) : (MaxCapacity * 0.9);
         if (mass + CurrentLoad > effectriveCapacity)
             throw new OverfillException($"Cannot load {mass}kg it is more than {effectriveCapacity}kg.");
         base.Load(mass);
@@ -82,7 +84,7 @@ public class LiquidContainer : Container, IHazardNotifier
 
 public class GasContainer : Container, IHazardNotifier
 {
-    public double Pressure {get; private set;}
+    public double Pressure { get; private set; }
 
     public GasContainer(double maxCapacity, double weight, double height, double depth, double pressure)
         : base(maxCapacity, weight, height, depth, "G")
@@ -106,6 +108,7 @@ public class GasContainer : Container, IHazardNotifier
         throw new NotImplementedException();
     }
 }
+
 public static class ProductTemperatureRequirements
 {
     private static readonly Dictionary<string, double> RequiredTemperatures = new Dictionary<string, double>
@@ -121,7 +124,7 @@ public static class ProductTemperatureRequirements
         { "Butter", 20.5 },
         { "Eggs", 19 }
     };
-    
+
     public static double GetRequiredTemperature(string product)
     {
         if (RequiredTemperatures.TryGetValue(product, out double temperature))
@@ -135,6 +138,7 @@ public static class ProductTemperatureRequirements
         }
     }
 }
+
 public class ReeferContainer : Container, IHazardNotifier
 {
     public double Temperature { get; private set; }
@@ -178,18 +182,76 @@ public class ContainerShip
         containers.Add(container);
     }
 
+    public void LoadContainers(IEnumerable<Container> newContainers)
+    {
+        foreach (var container in newContainers)
+        {
+            LoadContainer(container);
+        }
+    }
+
     private double GetTotalWeight()
     {
         return containers.Sum(c => c.Weight + c.CurrentLoad);
     }
-    
+
     public void UnloadContainer(string serialNumber)
     {
         containers.RemoveAll(c => c.SerialNumber == serialNumber);
     }
-    
+
+    public void UnloadContainer(string serialNumber, ContainerShip containerShip)
+    {
+        Container removed = containers.FirstOrDefault(c => c.SerialNumber == serialNumber);
+        containers.Remove(removed);
+        containerShip.LoadContainer(removed);
+    }
+
+    public void ReplaceContainer(string serialNumber, Container newContainer)
+    {
+        UnloadContainer(serialNumber);
+        LoadContainer(newContainer);
+    }
+
     public override string ToString()
     {
-        return $"Ship: {Name} (Speed: {MaxSpeed} knots, Containers: {containers.Count}/{MaxContainers}, Weight: {GetTotalWeight()/1000}/{MaxWeight}t)";
+        return $"Ship: {Name} (Speed: {MaxSpeed} knots, Containers: {containers.Count}/{MaxContainers}, Weight: {GetTotalWeight() / 1000}/{MaxWeight}t)";
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        try
+        {
+            var bigShip = new ContainerShip("Statek 1", 20.0, 100, 40000);
+            var smallShip = new ContainerShip("Statek 2", 25.0, 5, 40);
+
+            var liquidCont = new LiquidContainer(1000, 500, 243, 605, true);
+            var gasCont = new GasContainer(800, 600, 243, 605, 2.5);
+            var reeferCont = new ReeferContainer(1200, 700, 243, 605, -18, "Bananas");
+
+            liquidCont.Load(400);
+            gasCont.Load(700);
+            reeferCont.Load(1000);
+
+            bigShip.LoadContainer(liquidCont);
+            bigShip.LoadContainer(gasCont);
+            bigShip.LoadContainer(reeferCont);
+
+            bigShip.UnloadContainer("KON-L-1", smallShip);
+
+            Console.WriteLine(bigShip);
+            Console.WriteLine(liquidCont);
+            Console.WriteLine(gasCont);
+            Console.WriteLine(reeferCont);
+
+            liquidCont.NotifyHazard("Potential leak detected");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
     }
 }

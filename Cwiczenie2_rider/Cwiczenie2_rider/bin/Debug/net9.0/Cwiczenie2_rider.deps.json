@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "Cwiczenie2_rider/1.0.0": {
+        "runtime": {
+          "Cwiczenie2_rider.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Cwiczenie2_rider/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

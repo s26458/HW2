@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Cwiczenie2_rider")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6eb683b09800367578cac698f015c292688e4a1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+27be82346493be16268d8a962786dae1648e05de")]
 [assembly: System.Reflection.AssemblyProductAttribute("Cwiczenie2_rider")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Cwiczenie2_rider")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
