@@ -135,11 +135,11 @@ public static class ProductTemperatureRequirements
         }
     }
 }
-class ReeferContainer : Container, IHazardNotifier
+public class ReeferContainer : Container, IHazardNotifier
 {
     public double Temperature { get; private set; }
 
-    public ReeferContainer(double maxCapacity, double weight, double height, double depth, double temperature, String productType)
+    public ReeferContainer(double maxCapacity, double weight, double height, double depth, double temperature, string productType)
         : base(maxCapacity, weight, height, depth, "R")
     {
         ProductType = productType;
@@ -149,5 +149,47 @@ class ReeferContainer : Container, IHazardNotifier
     public void NotifyHazard(string message)
     {
         throw new NotImplementedException();
+    }
+}
+
+public class ContainerShip
+{
+    public string Name { get; private set; }
+    public double MaxSpeed { get; private set; }
+    public int MaxContainers { get; private set; }
+    public double MaxWeight { get; private set; }
+    private List<Container> containers;
+
+    public ContainerShip(string name, double maxSpeed, int maxContainers, double maxWeight)
+    {
+        Name = name;
+        MaxSpeed = maxSpeed;
+        MaxContainers = maxContainers;
+        MaxWeight = maxWeight;
+        containers = new List<Container>();
+    }
+
+    public void LoadContainer(Container container)
+    {
+        if (containers.Count >= MaxContainers)
+            throw new Exception("Too many containers");
+        if ((GetTotalWeight() + container.Weight + container.CurrentLoad) / 1000 > MaxWeight)
+            throw new OverfillException($"Max weight limit exceeded {MaxWeight}kg");
+        containers.Add(container);
+    }
+
+    private double GetTotalWeight()
+    {
+        return containers.Sum(c => c.Weight + c.CurrentLoad);
+    }
+    
+    public void UnloadContainer(string serialNumber)
+    {
+        containers.RemoveAll(c => c.SerialNumber == serialNumber);
+    }
+    
+    public override string ToString()
+    {
+        return $"Ship: {Name} (Speed: {MaxSpeed} knots, Containers: {containers.Count}/{MaxContainers}, Weight: {GetTotalWeight()/1000}/{MaxWeight}t)";
     }
 }
