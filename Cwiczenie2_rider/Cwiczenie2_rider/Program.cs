@@ -106,3 +106,48 @@ public class GasContainer : Container, IHazardNotifier
         throw new NotImplementedException();
     }
 }
+public static class ProductTemperatureRequirements
+{
+    private static readonly Dictionary<string, double> RequiredTemperatures = new Dictionary<string, double>
+    {
+        { "Bananas", 13.3 },
+        { "Chocolate", 18 },
+        { "Fish", 2 },
+        { "Meat", -15 },
+        { "Ice cream", -18 },
+        { "Frozen pizza", -30 },
+        { "Cheese", 7.2 },
+        { "Sausages", 5 },
+        { "Butter", 20.5 },
+        { "Eggs", 19 }
+    };
+    
+    public static double GetRequiredTemperature(string product)
+    {
+        if (RequiredTemperatures.TryGetValue(product, out double temperature))
+        {
+            return temperature;
+        }
+        else
+        {
+            Console.WriteLine("Unknown product, temp set to 0");
+            return 0;
+        }
+    }
+}
+class ReeferContainer : Container, IHazardNotifier
+{
+    public double Temperature { get; private set; }
+
+    public ReeferContainer(double maxCapacity, double weight, double height, double depth, double temperature, String productType)
+        : base(maxCapacity, weight, height, depth, "R")
+    {
+        ProductType = productType;
+        Temperature = ProductTemperatureRequirements.GetRequiredTemperature(productType);
+    }
+
+    public void NotifyHazard(string message)
+    {
+        throw new NotImplementedException();
+    }
+}
