@@ -80,3 +80,29 @@ public class LiquidContainer : Container, IHazardNotifier
     }
 }
 
+public class GasContainer : Container, IHazardNotifier
+{
+    public double Pressure {get; private set;}
+
+    public GasContainer(double maxCapacity, double weight, double height, double depth, double pressure)
+        : base(maxCapacity, weight, height, depth, "G")
+    {
+        Pressure = pressure;
+        ProductType = "Gas";
+    }
+
+    public override void Unload()
+    {
+        CurrentLoad = MaxCapacity * 0.05;
+    }
+
+    public void NotifyHazardous(string message)
+    {
+        Console.WriteLine($"HAZARD ALERT [{SerialNumber}]: {message}");
+    }
+
+    public void NotifyHazard(string message)
+    {
+        throw new NotImplementedException();
+    }
+}
